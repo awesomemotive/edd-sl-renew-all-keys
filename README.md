@@ -1,2 +1,2 @@
-# edd-sl-renew-all-keys
-A small add-on plugin for Software Licensing that adds an option for customers to renew all license keys at once
+# EDD Software Licensing - Renew All
+Provides an option for customers to easily renew all license keys. Requires Software Licensing for Easy Digital Downloads
