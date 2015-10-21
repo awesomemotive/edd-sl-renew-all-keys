@@ -1,4 +1,4 @@
-=== Transients Manager ===
+=== Easy Digital Downloads - Software Licensing - Renew All ===
 Plugin URI: http://easydigitaldownloads.com
 Author URI: http://easydigitaldownloads.com
 Contributors: mordauk
