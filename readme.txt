@@ -29,4 +29,4 @@ Once activated, a "Renew" button with a select drop down will be added to the to
 
 = 1.0 =
 
-* First release!
+* First release
