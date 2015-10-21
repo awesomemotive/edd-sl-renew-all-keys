@@ -89,134 +89,14 @@ class EDD_SL_Renew_All {
 					continue;
 				}
 
-				$this->add_renewal_to_cart( $license );
+				edd_sl_add_renewal_to_cart( $license->ID );
 
 			}
 
-		}
-
-	}
-
-	public function add_renewal_to_cart( $license ) {
-
-		$valid          = true;
-		$license_id     = $license->ID;
-		$payment_id     = get_post_meta( $license_id, '_edd_sl_payment_id', true );
-		$payment        = get_post( $payment_id );
-		$download_id    = edd_software_licensing()->get_download_id( $license_id );
-		$license_key    = edd_software_licensing()->get_license_key( $license_id );
-
-		if( empty( $download_id ) || empty( $payment_id ) ) {
-			return false;
-		}
-
-		if ( 'publish' !== $payment->post_status && 'complete' !== $payment->post_status ) {
-			return false;
-		}
-
-		$options = array( 'is_renewal' => true );
-		$license_parent = ! empty( $license->post_parent ) ? get_post( $license->post_parent ) : false ;
-
-		if ( $license->post_parent && ! empty( $license_parent ) ) {
-
-			$parent_license_id  = $license_parent->ID;
-			$parent_download_id = edd_software_licensing()->get_download_id( $parent_license_id );
-			$parent_license_key = edd_software_licensing()->get_license_key( $parent_license_id );
-
-			if ( ! edd_item_in_cart( $parent_download_id ) && ! edd_has_variable_prices( $download_id ) ) {
-				edd_add_to_cart( $parent_download_id, $options );
-			}
-
-			$license_id  = $parent_license_id;
-			$license     = $parent_license_key;
-			$download_id = $parent_download_id;
-
-		} elseif ( edd_is_bundled_product( $download_id ) && ! edd_item_in_cart( $download_id ) ) {
-
-			$valid = 1;
-
-			// Check if at least one of the bundled products is in the cart.
-			foreach ( edd_get_bundled_products( $download_id ) as $item_id ) {
-				if ( edd_item_in_cart( $item_id ) ) {
-					$valid = true;
-					break;
-				}
-			}
-
-			if ( $valid && ! edd_has_variable_prices( $download_id ) ) {
-				// Add the bundle to the cart.
-				edd_add_to_cart( $download_id, $options );
-			}
+			wp_redirect( edd_get_checkout_uri() ); exit;
 
 		}
 
-		// if product has variable prices, find previous used price id and add it to cart
-		if ( edd_has_variable_prices( $download_id ) ) {
-
-			$price_id = edd_software_licensing()->get_price_id( $license_id );
-
-			if( '' === $price_id ) {
-
-				// If no $price_id is available, try and find it from the payment ID. See https://github.com/pippinsplugins/EDD-Software-Licensing/issues/110
-				$payment_items = edd_get_payment_meta_downloads( $payment_id );
-
-				foreach( $payment_items as $payment_item ) {
-
-					if( (int) $payment_item['id'] !== (int) $download_id ) {
-						continue;
-					}
-
-					if( isset( $payment_item['options']['price_id'] ) ) {
-
-						$options['price_id'] = $payment_item['options']['price_id'];
-						break;
-					}
-				}
-
-			} else {
-				$options['price_id'] = $price_id;
-			}
-
-			$cart_key = edd_get_item_position_in_cart( $download_id, $options );
-			if ( false !== $cart_key ) {
-				edd_remove_from_cart( $cart_key );
-			}
-
-			edd_add_to_cart( $download_id, $options );
-			$valid = true;
-
-		} else {
-
-			$cart_key = edd_get_item_position_in_cart( $download_id );
-			if ( false !== $cart_key ) {
-				edd_remove_from_cart( $cart_key );
-			}
-
-			edd_add_to_cart( $download_id, $options );
-			$valid = true;
-
-		}
-
-		if( empty( $download_id ) || ! edd_item_in_cart( $download_id ) ) {
-			return;
-		}
-
-		if( true === $valid ) {
-
-			$keys = (array) EDD()->session->get( 'edd_renewal_keys' );
-			$keys[ $download_id ] = $license_key;
-
-			EDD()->session->set( 'edd_is_renewal', '1' );
-			EDD()->session->set( 'edd_renewal_keys', $keys );
-
-
-		} else {
-
-			return false;
-
-		}
-
-		return true;
 	}
 
 }
