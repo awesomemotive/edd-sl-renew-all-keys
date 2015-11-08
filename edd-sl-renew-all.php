@@ -26,7 +26,7 @@ class EDD_SL_Renew_All {
 					<option value="expiring_1_month"><?php _e( 'All keys expiring within 30 days', 'edd-sl-renew-all' ); ?></option>
 					<option value="all"><?php _e( 'All license keys', 'edd-sl-renew-all' ); ?></option>
 				</select>
-				<input type="submit" name="edd_renew_all" value="<?php _e( 'Renew', 'edd-sl-renew-all' ); ?>"/>
+				<input type="submit" class="button" name="edd_renew_all" value="<?php _e( 'Renew', 'edd-sl-renew-all' ); ?>"/>
 				<input type="hidden" name="edd_action" value="renew_all_keys"/>
 				<?php wp_nonce_field( 'edd_sl_renew_all_nonce', 'edd_sl_renew_all' ); ?>
 			</p>
