@@ -3,7 +3,7 @@
  * Plugin Name: Easy Digital Downloads - Software Licensing - Renew All
  * Description: Adds a "Renew all licenses" button to account page
  * Author: Pippin Williamson
- * Version: 1.0
+ * Version: 1.0.1
  */
 
 class EDD_SL_Renew_All {

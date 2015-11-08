@@ -5,7 +5,7 @@ Contributors: mordauk
 Tags: transients
 Requires at least: 4.0
 Tested up to: 4.4
-Stable Tag: 1.0
+Stable Tag: 1.0.1
 
 Provides an option for customers to easily renew all license keys. Requires Software Licensing for Easy Digital Downloads
 
@@ -26,6 +26,10 @@ Once activated, a "Renew" button with a select drop down will be added to the to
 3. Renew all option will be shown at the top of the page with [edd_license_keys]
 
 == Changelog ==
+
+= 1.0.1 November 8, 2015 =
+
+* Added a class of "button" to the submit button
 
 = 1.0 =
 
