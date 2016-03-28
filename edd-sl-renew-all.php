@@ -101,4 +101,4 @@ class EDD_SL_Renew_All {
 
 }
 global $edd_sl_renew_all;
-$$edd_sl_renew_all = new EDD_SL_Renew_All;
+$edd_sl_renew_all = new EDD_SL_Renew_All;
