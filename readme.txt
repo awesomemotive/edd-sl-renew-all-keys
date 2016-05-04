@@ -4,8 +4,8 @@ Author URI: http://easydigitaldownloads.com
 Contributors: mordauk
 Tags: transients
 Requires at least: 4.0
-Tested up to: 4.4
-Stable Tag: 1.0.1
+Tested up to: 4.5
+Stable Tag: 1.0.2
 
 Provides an option for customers to easily renew all license keys. Requires Software Licensing for Easy Digital Downloads
 
@@ -26,6 +26,10 @@ Once activated, a "Renew" button with a select drop down will be added to the to
 3. Renew all option will be shown at the top of the page with [edd_license_keys]
 
 == Changelog ==
+
+= 1.0.2 May 4, 2016 =
+
+* Only show "All Expired Keys" if the customer has expired keys
 
 = 1.0.1 November 8, 2015 =
 

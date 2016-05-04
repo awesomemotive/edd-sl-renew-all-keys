@@ -3,7 +3,7 @@
  * Plugin Name: Easy Digital Downloads - Software Licensing - Renew All
  * Description: Adds a "Renew all licenses" button to account page
  * Author: Pippin Williamson
- * Version: 1.0.1
+ * Version: 1.0.2
  */
 
 class EDD_SL_Renew_All {
@@ -22,7 +22,9 @@ class EDD_SL_Renew_All {
 		<form id="edd-sl-renew-all" class="edd-form" method="post">
 			<p>
 				<select name="edd_sl_renew_type">
-					<option value="expired"><?php _e( 'All expired keys', 'edd-sl-renew-all' ); ?></option>
+					<?php if( $this->has_expired_keys() ) : ?>
+						<option value="expired"><?php _e( 'All expired keys', 'edd-sl-renew-all' ); ?></option>
+					<?php endif; ?>
 					<option value="expiring_1_month"><?php _e( 'All keys expiring within 30 days', 'edd-sl-renew-all' ); ?></option>
 					<option value="all"><?php _e( 'All license keys', 'edd-sl-renew-all' ); ?></option>
 				</select>
@@ -32,6 +34,24 @@ class EDD_SL_Renew_All {
 			</p>
 		</form>
 <?php		
+	}
+
+	public function has_expired_keys() {
+
+		$has_expired  = false;
+		$license_keys = edd_software_licensing()->get_license_keys_of_user( get_current_user_id() );
+
+		if( is_array( $license_keys ) ) {
+			foreach( $license_keys as $license ) {
+				if( 'expired' == edd_software_licensing()->get_license_status( $license->ID ) ) {
+					$has_expired = true;
+					break;
+				}
+			}
+		}
+
+		return $has_expired;
+
 	}
 
 	public function process_renew_all() {
